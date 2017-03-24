@@ -11,6 +11,7 @@ end
 
 posts = Post.all
 
+
 #Create Comments
 
 100.times do
@@ -19,6 +20,15 @@ posts = Post.all
     body: RandomData.random_paragraph
   )
 end
+
+puts "#{Post.count} posts created before running find_or_create_by"
+puts "#{Comment.count} comments created before running find_or_create_by"
+
+unique_post = Post.find_or_create_by!(title: "A unique title", body: "A unique body")
+Comment.find_or_create_by!(post: unique_post, body: "A unique body")
+
+puts "#{Post.count} posts created after running find_or_create_by"
+puts "#{Comment.count} comments created after running find_or_create_by"
 
 puts "Seed finished"
 puts "#{Post.count} posts created"
