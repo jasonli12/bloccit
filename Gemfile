@@ -31,3 +31,5 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 
 gem 'bootstrap-sass'
+
+gem 'bcrypt'
