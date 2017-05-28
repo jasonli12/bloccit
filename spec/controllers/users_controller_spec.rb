@@ -22,7 +22,7 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "POST craete" do
+  describe "POST create" do
     it "returns an http redirect" do
       post :create, user: new_user_attributes
       expect(response).to have_http_status(:redirect)
@@ -80,6 +80,22 @@ RSpec.describe UsersController, type: :controller do
     it "assigns factory_user to @user" do
       get :show, {id: factory_user.id}
       expect(assigns(:user)).to eq(factory_user)
+    end
+  end
+
+   describe "favorited post" do
+    let(:post) { create(:post) }
+    let(:another_user) { create(:user) }
+
+    it "assigns favorited post to @favorited_posts" do
+      favorite = another_user.favorites.where(post: post).create
+      get :show, {id: another_user.id}
+      expect(assigns(:favorited_posts)).to eq [post]
+    end
+
+    it "does not assign unfavorited post to @favorited_posts" do
+      get :show, {id: another_user.id}
+      expect(assigns(:favorited_posts)).to be_empty
     end
   end
 end
